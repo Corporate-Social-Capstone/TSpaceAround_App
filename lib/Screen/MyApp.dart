@@ -128,14 +128,19 @@ class _MyAppState extends State<MyApp> {
                           ),
                           Column(
                             children: [
-                              ClipOval(
-                                child: Image(
-                                  image: AssetImage(
-                                    'asset/img/btnImage.jpeg',
+                              GestureDetector(
+                                onTap: () {
+                                  print("test1");
+                                },
+                                child: ClipOval(
+                                  child: Image(
+                                    image: AssetImage(
+                                      'asset/img/icon1.png',
+                                    ),
+                                    width: 72, // 이미지의 너비를 설정합니다.
+                                    height: 72, // 이미지의 높이를 설정합니다.
+                                    fit: BoxFit.cover, // 이미지가 부모 위젯의 크기에 맞게 조절되도록 합니다.)
                                   ),
-                                  width: 72, // 이미지의 너비를 설정합니다.
-                                  height: 72, // 이미지의 높이를 설정합니다.
-                                  fit: BoxFit.cover, // 이미지가 부모 위젯의 크기에 맞게 조절되도록 합니다.)
                                 ),
                               ),
                               SizedBox(
