@@ -5,6 +5,7 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:t_space_around/Component/Chart.dart';
 import 'package:t_space_around/Component/SimpleAppBar.dart';
 import 'package:t_space_around/Screen/AroundRecoListView.dart';
+import 'package:t_space_around/Screen/MyApp.dart';
 
 import '../Component/IconButton.dart';
 
@@ -51,7 +52,7 @@ class _MyLifeStyleState extends State<MyLifeStyle> {
               actions: [
                 Padding(
                   padding: const EdgeInsets.only(right: 8.0),
-                  child: CustomIconButton(iconCase: 3, onPressed: () {}),
+                  child: CustomIconButton(iconCase: 3, onPressed: onPressed),
                 )
               ],
             ),
@@ -69,6 +70,11 @@ class _MyLifeStyleState extends State<MyLifeStyle> {
             ),
           ],
         ));
+  }
+  void onPressed() {
+    Navigator.pushAndRemoveUntil(context, MaterialPageRoute( //페이지 스택 제거
+        builder: (BuildContext context) =>
+            MyApp()), (route) => false);
   }
 }
 

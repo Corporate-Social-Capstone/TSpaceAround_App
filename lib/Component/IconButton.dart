@@ -20,6 +20,8 @@ class CustomIconButton extends StatelessWidget {
             ? Icon(Icons.book)
             : iconCase == 2
                 ? Icon(Icons.search)
-                : Icon(Icons.menu));
+                : iconCase == 3
+                    ? Icon(Icons.home_outlined, color: Colors.black,size: 32,)
+                    : Icon(Icons.menu));
   }
 }
