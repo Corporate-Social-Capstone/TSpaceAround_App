@@ -3,16 +3,16 @@ import 'package:geolocator/geolocator.dart';
 import '../Component/SimpleAppBar.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-class MySubScribe extends StatefulWidget {
+class AllSubScribe extends StatefulWidget {
   final TextStyle ts;
 
-  const MySubScribe({required this.ts, Key? key}) : super(key: key);
+  const AllSubScribe({required this.ts, Key? key}) : super(key: key);
 
   @override
-  State<MySubScribe> createState() => _MySubScribeState();
+  State<AllSubScribe> createState() => _AllSubScribeState();
 }
 
-class _MySubScribeState extends State<MySubScribe> {
+class _AllSubScribeState extends State<AllSubScribe> {
   var selectedValue = '모든 구독 상품 유형';
   var selectedValue2 = '추천순';
   final valueList = ['모든 구독 상품 유형', '모든 구독 상품 유형2'];

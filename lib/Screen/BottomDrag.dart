@@ -4,7 +4,8 @@ import 'package:t_space_around/Component/StackCircleIcon.dart';
 import 'package:t_space_around/Component/color.dart';
 import 'package:t_space_around/Screen/MyLifeStyleDetail.dart';
 import 'package:dio/dio.dart';
-import 'package:t_space_around/Screen/MySubscribeScreen.dart';
+import 'package:t_space_around/Screen/AllSubScribe.dart';
+import 'package:t_space_around/Screen/MySubscribe.dart';
 import '../Component/IconButtonWithSize.dart';
 import 'MyApp.dart';
 
@@ -530,7 +531,7 @@ class _BottomDragState extends State<BottomDrag> {
   void mySubscribeIconBtn() {
     Navigator.of(context)
         .push(MaterialPageRoute(builder: (BuildContext context) {
-      return MySubScribe(ts: ts);
+      return MySubScribe();
     }));
   }
 }
