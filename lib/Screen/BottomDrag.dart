@@ -4,6 +4,7 @@ import 'package:t_space_around/Component/StackCircleIcon.dart';
 import 'package:t_space_around/Component/color.dart';
 import 'package:t_space_around/Screen/MyLifeStyleDetail.dart';
 import 'package:dio/dio.dart';
+import 'package:t_space_around/Screen/MySubscribeScreen.dart';
 import '../Component/IconButtonWithSize.dart';
 import 'MyApp.dart';
 
@@ -13,6 +14,9 @@ class BottomDrag extends StatefulWidget {
 }
 
 class _BottomDragState extends State<BottomDrag> {
+  final ts =
+      TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: Colors.black);
+
   Future getBottomDragData() async {
     final dio = Dio();
     final resp = await dio.get("");
@@ -20,8 +24,6 @@ class _BottomDragState extends State<BottomDrag> {
 
   @override
   Widget build(BuildContext context) {
-    final ts = TextStyle(
-        fontSize: 16, fontWeight: FontWeight.w700, color: Colors.black);
     final ContainerBorderDecoration = BoxDecoration(
       color: Colors.white,
       borderRadius: BorderRadius.circular(16),
@@ -264,8 +266,11 @@ class _BottomDragState extends State<BottomDrag> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text("나의 구독", style: ts),
-                                    Icon(Icons.trending_flat,
-                                        size: 40, color: Colors.black),
+                                    GestureDetector(
+                                      onTap: mySubscribeIconBtn,
+                                      child: Icon(Icons.trending_flat,
+                                          size: 40, color: Colors.black),
+                                    ),
                                   ]),
                               Container(
                                   width: MediaQuery.of(context).size.width,
@@ -432,15 +437,15 @@ class _BottomDragState extends State<BottomDrag> {
                                       textString: "이용내역"),
                                   IconButtonWithSize(
                                       onPressed: onPressed,
-                                      iconCase: 1,
+                                      iconCase: 5,
                                       textString: "혜택 쿠폰함"),
                                   IconButtonWithSize(
                                       onPressed: onPressed,
-                                      iconCase: 1,
+                                      iconCase: 4,
                                       textString: "관심브랜드"),
                                   IconButtonWithSize(
-                                      onPressed: onPressed,
-                                      iconCase: 1,
+                                      onPressed: mySubscribeIconBtn,
+                                      iconCase: 6,
                                       textString: "나의구독"),
                                 ],
                               ),
@@ -519,6 +524,13 @@ class _BottomDragState extends State<BottomDrag> {
     Navigator.of(context)
         .push(MaterialPageRoute(builder: (BuildContext context) {
       return MyLifeStyle();
+    }));
+  }
+
+  void mySubscribeIconBtn() {
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (BuildContext context) {
+      return MySubScribe(ts: ts);
     }));
   }
 }

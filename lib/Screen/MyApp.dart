@@ -85,27 +85,30 @@ class _MyAppState extends State<MyApp> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Column(
-                              children: [
-                                ClipOval(
-                                  child: Image(
-                                    image: AssetImage(
-                                      'asset/img/btnImage.jpeg',
+                            GestureDetector(
+                              onTap: allSubcribeOnTap,
+                              child: Column(
+                                children: [
+                                  ClipOval(
+                                    child: Image(
+                                      image: AssetImage(
+                                        'asset/img/allSubList.png',
+                                      ),
+                                      width: 78,
+                                      height: 78,
+                                      fit: BoxFit.cover,
                                     ),
-                                    width: 72,
-                                    height: 72,
-                                    fit: BoxFit.cover,
                                   ),
-                                ),
-                                SizedBox(
-                                  height: 16,
-                                ),
-                                Text(
-                                  '모든 상품',
-                                  style: ts.copyWith(
-                                      color: Colors.black, fontSize: 12),
-                                )
-                              ],
+                                  SizedBox(
+                                    height: 16,
+                                  ),
+                                  Text(
+                                    '모든 상품',
+                                    style: ts.copyWith(
+                                        color: Colors.black, fontSize: 12),
+                                  )
+                                ],
+                              ),
                             ),
                             Column(
                               children: [
@@ -217,6 +220,12 @@ class _MyAppState extends State<MyApp> {
     Navigator.of(context)
         .push(MaterialPageRoute(builder: (BuildContext context) {
       return MyApp();
+    }));
+  }
+  void allSubcribeOnTap() {
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (BuildContext context) {
+      return MySubScribe(ts: ts);
     }));
   }
 }

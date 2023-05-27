@@ -26,7 +26,6 @@ class IconButtonWithSize extends StatelessWidget {
                   Icons.description_outlined,
                   color: Colors.black,
                   size: 40,
-
                 )
               : iconCase == 2
                   ? Icon(
@@ -40,11 +39,26 @@ class IconButtonWithSize extends StatelessWidget {
                           color: Colors.black,
                           size: 40,
                         )
-                      : Icon(
-                          Icons.description_outlined,
-                          color: Colors.black,
-                          size: 40,
-                        ),
+                      : iconCase == 4
+                          ? Icon(
+                              Icons.loyalty_outlined,
+                              color: Colors.black,
+                              size: 40,
+                            )
+                          : iconCase == 5
+                              ? Icon(
+                                  Icons.card_membership,
+                                  color: Colors.black,
+                                  size: 40,
+                                )
+                              : iconCase == 6
+                                  ? Icon(Icons.format_list_bulleted,
+                                      size: 40, color: Colors.black)
+                                  : Icon(
+                                      Icons.description_outlined,
+                                      color: Colors.black,
+                                      size: 40,
+                                    ),
           onPressed: onPressed,
           padding: EdgeInsets.all(0),
         ),
@@ -58,5 +72,4 @@ class IconButtonWithSize extends StatelessWidget {
       ],
     );
   }
-
 }
