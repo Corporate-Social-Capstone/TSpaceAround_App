@@ -4,9 +4,12 @@ import 'package:t_space_around/Component/color.dart';
 import 'package:t_space_around/Screen/BottomDrag.dart';
 import 'package:t_space_around/Screen/AllSubScribe.dart';
 import 'package:t_space_around/Screen/MySubscribe.dart';
+import 'package:simple_shadow/simple_shadow.dart';
 
 class MyApp extends StatefulWidget {
-  const MyApp({Key? key}) : super(key: key);
+  final String loginId;
+
+  const MyApp({required this.loginId, Key? key}) : super(key: key);
 
   @override
   State<MyApp> createState() => _MyAppState();
@@ -27,7 +30,7 @@ class _MyAppState extends State<MyApp> {
               children: [
                 AppBar(
                   title: Text("T membership"),
-                  backgroundColor: Colors.indigoAccent,
+                  backgroundColor: PrimaryColor,
                   centerTitle: false,
                   actions: [
                     CustomIconButton(onPressed: onPressed, iconCase: 1),
@@ -44,7 +47,7 @@ class _MyAppState extends State<MyApp> {
                           width: MediaQuery.of(context).size.width,
                           child: DecoratedBox(
                             decoration: BoxDecoration(
-                              color: Colors.indigoAccent,
+                              color: PrimaryColor,
                             ),
                           ),
                         ),
@@ -67,15 +70,32 @@ class _MyAppState extends State<MyApp> {
                             ],
                           ),
                         ),
-                        Column(children: [
-                          SizedBox(
-                            height: 64,
-                          ),
-                          Center(
-                            child:
-                                Image(image: AssetImage('asset/img/TMain.png')),
-                          )
-                        ]),
+                        Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              SizedBox(
+                                height: 64,
+                              ),
+                              Container(
+                                child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 16.0),
+                                    child: SimpleShadow(
+                                      child: Image.asset('asset/img/mainimage.png'),
+                                      opacity: 0.8,
+                                      // Default: 0.5
+                                      color: Colors.black87,
+                                      // Default: Black
+                                      offset: Offset(0, 5),
+                                      // Default: Offset(2, 2)
+                                      sigma: 8, // Default: 2
+                                    )
+                                    /*Image(
+                                      image: AssetImage('asset/img/image.png')),*/
+                                    ),
+                              )
+                            ]),
                       ],
                     ),
                     SizedBox(
@@ -87,7 +107,7 @@ class _MyAppState extends State<MyApp> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           GestureDetector(
-                            onTap: allSubcribeOnTap,
+                            onTap: mySubScribe,
                             child: Column(
                               children: [
                                 ClipOval(
@@ -116,7 +136,7 @@ class _MyAppState extends State<MyApp> {
                               ClipOval(
                                 child: Image(
                                   image: AssetImage(
-                                    'asset/img/btnImage.jpeg',
+                                    'asset/img/HotIcon.png',
                                   ),
                                   width: 72, // 이미지의 너비를 설정합니다.
                                   height: 72, // 이미지의 높이를 설정합니다.
@@ -143,7 +163,7 @@ class _MyAppState extends State<MyApp> {
                                 child: ClipOval(
                                   child: Image(
                                     image: AssetImage(
-                                      'asset/img/icon1.png',
+                                      'asset/img/AroundIcon.png',
                                     ),
                                     width: 72, // 이미지의 너비를 설정합니다.
                                     height: 72, // 이미지의 높이를 설정합니다.
@@ -167,7 +187,7 @@ class _MyAppState extends State<MyApp> {
                                 ClipOval(
                                   child: Image(
                                     image: AssetImage(
-                                      'asset/img/btnImage.jpeg',
+                                      'asset/img/MySubIcon.png',
                                     ),
                                     width: 72, // 이미지의 너비를 설정합니다.
                                     height: 72, // 이미지의 높이를 설정합니다.
@@ -201,7 +221,9 @@ class _MyAppState extends State<MyApp> {
               ],
             ),
           ),
-          BottomDrag()
+          BottomDrag(
+            loginId: widget.loginId,
+          )
         ],
       ),
     );
@@ -210,21 +232,15 @@ class _MyAppState extends State<MyApp> {
   void mySubScribe() {
     Navigator.of(context)
         .push(MaterialPageRoute(builder: (BuildContext context) {
-      return MySubScribe();
+      return MySubScribe(loginId: widget.loginId,);
     }));
   }
 
   void onPressed() {
     Navigator.of(context)
         .push(MaterialPageRoute(builder: (BuildContext context) {
-      return MyApp();
+      return MyApp(loginId: widget.loginId);
     }));
   }
 
-  void allSubcribeOnTap() {
-    Navigator.of(context)
-        .push(MaterialPageRoute(builder: (BuildContext context) {
-      return AllSubScribe(ts: ts);
-    }));
-  }
 }

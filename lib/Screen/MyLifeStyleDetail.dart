@@ -1,18 +1,18 @@
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:t_space_around/Component/Chart.dart';
-import 'package:t_space_around/Component/SimpleAppBar.dart';
 import 'package:t_space_around/Screen/AroundRecoListView.dart';
 import 'package:t_space_around/Screen/MyApp.dart';
-
 import '../Component/IconButton.dart';
+import 'package:dio/dio.dart';
 
 class MyLifeStyle extends StatefulWidget {
   //final List<charts.Series<Sales, String>> seriesList;
+  final String loginId;
 
   const MyLifeStyle({
+    required this.loginId,
     Key? key,
   }) : super(key: key);
 
@@ -21,6 +21,14 @@ class MyLifeStyle extends StatefulWidget {
 }
 
 class _MyLifeStyleState extends State<MyLifeStyle> {
+  Future getMyLifeStyle() async {
+    final dio = Dio();
+    final resp = await dio.get(
+        "http://211.62.179.135:4001/user/myLifeStyle?name=" + widget.loginId);
+    print(resp.data);
+    return resp.data;
+  }
+
   @override
   Widget build(BuildContext context) {
     final ts = TextStyle(
@@ -39,51 +47,83 @@ class _MyLifeStyleState extends State<MyLifeStyle> {
     );
     return Scaffold(
         resizeToAvoidBottomInset: false,
-        body: CustomScrollView(
-          slivers: [
-            SliverAppBar(
-              title: Text(
-                "나의 라이프 스타일",
-                style: ts.copyWith(fontSize: 20),
-              ),
-              iconTheme: IconThemeData(color: Colors.black),
-              backgroundColor: Colors.white,
-              centerTitle: false,
-              actions: [
-                Padding(
-                  padding: const EdgeInsets.only(right: 8.0),
-                  child: CustomIconButton(iconCase: 3, onPressed: onPressed),
-                )
-              ],
-            ),
-            SliverPadding(
-              padding: EdgeInsets.all(16),
-              sliver: SliverToBoxAdapter(
-                child: TopPart(
+        body: FutureBuilder(
+            future: getMyLifeStyle(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(child: CircularProgressIndicator());
+              }
+              if (snapshot.hasError) {
+                return Text("Error: ${snapshot.error}");
+              }
+              var categories = snapshot.data['ex'];
+              var ment = snapshot.data['ment'];
+              var storeName = snapshot.data['store'];
+              print(storeName);
+              return CustomScrollView(
+                slivers: [
+                  SliverAppBar(
+                    title: Text(
+                      "나의 라이프 스타일",
+                      style: ts.copyWith(fontSize: 20),
+                    ),
+                    iconTheme: IconThemeData(color: Colors.black),
+                    backgroundColor: Colors.white,
+                    centerTitle: false,
+                    actions: [
+                      Padding(
+                        padding: const EdgeInsets.only(right: 8.0),
+                        child:
+                            CustomIconButton(iconCase: 3, onPressed: onPressed),
+                      )
+                    ],
+                  ),
+                  SliverPadding(
+                    padding: EdgeInsets.all(16),
+                    sliver: SliverToBoxAdapter(
+                      child: TopPart(
+                          data: categories,
+                          loginId: widget.loginId,
+                          ContainerBorderDecoration: ContainerBorderDecoration,
+                          ts: ts),
+                    ),
+                  ),
+                  BottomPart(
+                    loginId: widget.loginId,
+                    storeName: storeName,
+                    ment: ment,
+                    ts: ts,
                     ContainerBorderDecoration: ContainerBorderDecoration,
-                    ts: ts),
-              ),
-            ),
-            BottomPart(
-              ts: ts,
-              ContainerBorderDecoration: ContainerBorderDecoration,
-            ),
-          ],
-        ));
+                  ),
+                ],
+              );
+            }));
   }
+
   void onPressed() {
-    Navigator.pushAndRemoveUntil(context, MaterialPageRoute( //페이지 스택 제거
-        builder: (BuildContext context) =>
-            MyApp()), (route) => false);
+    Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+            //페이지 스택 제거
+            builder: (BuildContext context) => MyApp(
+                  loginId: widget.loginId,
+                )),
+        (route) => false);
   }
 }
 
 class TopPart extends StatelessWidget {
+  final String loginId;
   final TextStyle ts;
   final BoxDecoration ContainerBorderDecoration;
+  final dynamic data;
 
   const TopPart(
-      {required this.ts, required this.ContainerBorderDecoration, Key? key})
+      {required this.data,
+      required this.loginId,
+      required this.ts,
+      required this.ContainerBorderDecoration,
+      Key? key})
       : super(key: key);
 
   @override
@@ -112,8 +152,16 @@ class TopPart extends StatelessWidget {
                 ),
               ],
             ),
+
             // 이부분
-            CustomChart(),
+            CustomChart(
+              ex1: int.parse(data[0]),
+              ex2: int.parse(data[1]),
+              ex3: int.parse(data[2]),
+              ex4: int.parse(data[3]),
+              ex5: int.parse(data[4]),
+              ex6: int.parse(data[5]),
+            ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
@@ -231,11 +279,20 @@ class TopPart extends StatelessWidget {
 }
 
 class BottomPart extends StatelessWidget {
+  final String loginId;
+  final dynamic ment;
+  final dynamic storeName;
   final TextStyle ts;
   final BoxDecoration ContainerBorderDecoration;
 
   const BottomPart(
-      {required this.ts, required this.ContainerBorderDecoration, Key? key})
+      {
+        required this.loginId,
+        required this.storeName,
+        required this.ment,
+      required this.ts,
+      required this.ContainerBorderDecoration,
+      Key? key})
       : super(key: key);
 
   @override
@@ -260,7 +317,7 @@ class BottomPart extends StatelessWidget {
                 child: ListView.builder(
                   physics: NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-                  itemCount: 10,
+                  itemCount: 3,
                   itemBuilder: (context, index) {
                     return Column(
                       children: [
@@ -284,38 +341,40 @@ class BottomPart extends StatelessWidget {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Text("🧋카페를 자주가능 당신을 위한", style: ts),
+                                      Text(ment, style: ts),
                                     ],
                                   ),
                                 ),
                               ),
                               AroundRecoListView(
+                                loginId: loginId,
                                   cafeDis: 592,
-                                  cafeImage: "BLUEPOT_LOGO1.png",
-                                  cafeName: "파플스카페 충무로점"),
-                              Divider(
-                                color: Colors.grey,
-                                height: 30,
-                                thickness: 0.5,
-                              ),
-                              AroundRecoListView(
-                                cafeDis: 966,
-                                cafeName: '카페 이리로',
-                                cafeImage: "caffe115.jpeg",
-                              ),
+
+                                  storeName: storeName),
+                              // Divider(
+                              //   color: Colors.grey,
+                              //   height: 30,
+                              //   thickness: 0.5,
+                              // ),
+                              // AroundRecoListView(
+                              //   loginId: loginId,
+                              //   cafeDis: 966,
+                              //   storeName: storeName,
+                              //   cafeImage: "caffe115.jpeg",
+                              // ),
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Center(
                                     child: GestureDetector(
-                                      onTap : (){},
-                                      child: Text(
-                                  "더보기",
-                                  style: ts.copyWith(
+                                  onTap: () {},
+                                  child: Text(
+                                    "더보기",
+                                    style: ts.copyWith(
                                         color: Colors.grey[700],
                                         fontWeight: FontWeight.w500,
                                         decoration: TextDecoration.underline),
-                                ),
-                                    )),
+                                  ),
+                                )),
                               ),
                             ],
                           ),

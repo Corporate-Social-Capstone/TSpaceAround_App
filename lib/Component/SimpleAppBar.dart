@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:t_space_around/Component/IconButton.dart';
-import 'package:t_space_around/Component/color.dart';
-
 import '../Screen/MyApp.dart';
 
 class SimpleAppBar extends StatefulWidget {
+  final String loginId;
   final String titleText;
   final int iconBtnCase;
 
   const SimpleAppBar({
+    required this.loginId,
     required this.iconBtnCase,
     required this.titleText,
     Key? key,
@@ -28,14 +28,22 @@ class _SimpleAppBarState extends State<SimpleAppBar> {
       iconTheme: IconThemeData(color: Colors.black),
       backgroundColor: Colors.white,
       centerTitle: false,
-      title: Text(widget.titleText,style: ts.copyWith(fontSize: 20),),
-      actions: [CustomIconButton(iconCase: widget.iconBtnCase, onPressed: onPressed)],
+      title: Text(
+        widget.titleText,
+        style: ts.copyWith(fontSize: 20),
+      ),
+      actions: [
+        CustomIconButton(iconCase: widget.iconBtnCase, onPressed: onPressed)
+      ],
     );
   }
 
   void onPressed() {
-    Navigator.pushAndRemoveUntil(context, MaterialPageRoute( //페이지 스택 제거
-        builder: (BuildContext context) =>
-            MyApp()), (route) => false);
+    Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+            //페이지 스택 제거
+            builder: (BuildContext context) => MyApp(loginId: widget.loginId)),
+        (route) => false);
   }
 }

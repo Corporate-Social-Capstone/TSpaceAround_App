@@ -4,12 +4,16 @@ import 'package:t_space_around/Component/StackCircleIcon.dart';
 import 'package:t_space_around/Component/color.dart';
 import 'package:t_space_around/Screen/MyLifeStyleDetail.dart';
 import 'package:dio/dio.dart';
-import 'package:t_space_around/Screen/AllSubScribe.dart';
 import 'package:t_space_around/Screen/MySubscribe.dart';
 import '../Component/IconButtonWithSize.dart';
+import '../url_name/data.dart';
 import 'MyApp.dart';
 
 class BottomDrag extends StatefulWidget {
+  final String loginId;
+
+  BottomDrag({Key? key, required this.loginId}) : super(key: key);
+
   @override
   State<BottomDrag> createState() => _BottomDragState();
 }
@@ -21,6 +25,14 @@ class _BottomDragState extends State<BottomDrag> {
   Future getBottomDragData() async {
     final dio = Dio();
     final resp = await dio.get("");
+  }
+
+  Future getAiRecomendData() async {
+    final dio = Dio();
+    final resp = await dio
+        .get("http://211.62.179.135:4001/user/category?name=" + widget.loginId);
+    print(resp.data);
+    return resp.data;
   }
 
   @override
@@ -108,7 +120,7 @@ class _BottomDragState extends State<BottomDrag> {
                                                 TextStyle(color: Colors.white),
                                           ))),
                                       SizedBox(width: 8),
-                                      Text("김건휘님",
+                                      Text(widget.loginId + "님",
                                           style: TextStyle(
                                               color: Colors.black,
                                               fontSize: 24,
@@ -153,7 +165,7 @@ class _BottomDragState extends State<BottomDrag> {
                                                       style: ts.copyWith(
                                                           fontSize: 14)),
                                                   SizedBox(height: 8),
-                                                  Text("0원 >",
+                                                  Text("1500원 >",
                                                       style: ts.copyWith(
                                                           color: Colors.blue,
                                                           fontSize: 18))
@@ -174,7 +186,7 @@ class _BottomDragState extends State<BottomDrag> {
                                                   Text("사용가능 T플러스포인트",
                                                       style: ts.copyWith(
                                                           fontSize: 14)),
-                                                  SizedBox(
+                                                  const SizedBox(
                                                     height: 8,
                                                   ),
                                                   Text(
@@ -262,90 +274,129 @@ class _BottomDragState extends State<BottomDrag> {
                                         ])
                                       ])),
                               const SizedBox(height: 16),
-                              Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text("나의 구독", style: ts),
-                                    GestureDetector(
-                                      onTap: mySubscribeIconBtn,
-                                      child: Icon(Icons.trending_flat,
-                                          size: 40, color: Colors.black),
-                                    ),
-                                  ]),
-                              Container(
-                                  width: MediaQuery.of(context).size.width,
-                                  height: 80,
-                                  decoration: ContainerBorderDecoration,
-                                  child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 8.0),
-                                      child: Row(children: [
-                                        ClipOval(
-                                          child: Image(
-                                              image: AssetImage(
-                                                'asset/img/BLUEPOT_LOGO1.png',
-                                              ),
-                                              width: 44,
-                                              // 이미지의 너비를 설정합니다.
-                                              height: 44,
-                                              // 이미지의 높이를 설정합니다.
-                                              fit: BoxFit
-                                                  .cover // 이미지가 부모 위젯의 크기에 맞게 조절되도록 합니다.)
-                                              ),
-                                        ),
-                                        Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 8.0),
-                                            child: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                children: [
-                                                  Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Text("블루포트 동국대점",
-                                                            style: ts),
-                                                        SizedBox(height: 4),
-                                                        Text(
-                                                          "잔여 14/30",
+                              GestureDetector(
+                                onTap: mySubscribeIconBtn,
+                                child: Container(
+                                  child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text("나의 구독", style: ts),
+                                        Icon(Icons.trending_flat,
+                                            size: 40, color: Colors.black),
+                                      ]),
+                                ),
+                              ),
+                              set == 1
+                                  ? Container(
+                                      width: MediaQuery.of(context).size.width,
+                                      height: 80,
+                                      decoration: ContainerBorderDecoration,
+                                      child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 8.0),
+                                          child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Row(
+                                                  children: [
+                                                    ClipOval(
+                                                      child: Image(
+                                                          image: AssetImage(
+                                                            'asset/img/subScribe.jpeg',
+                                                          ),
+                                                          width: 44,
+                                                          // 이미지의 너비를 설정합니다.
+                                                          height: 44,
+                                                          // 이미지의 높이를 설정합니다.
+                                                          fit: BoxFit
+                                                              .cover // 이미지가 부모 위젯의 크기에 맞게 조절되도록 합니다.)
+                                                          ),
+                                                    ),
+                                                    Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .symmetric(
+                                                                horizontal:
+                                                                    8.0),
+                                                        child: Column(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .center,
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .center,
+                                                            children: [
+                                                              Column(
+                                                                  crossAxisAlignment:
+                                                                      CrossAxisAlignment
+                                                                          .start,
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .start,
+                                                                  children: [
+                                                                    Text(
+                                                                        "피플스카페 동국대점",
+                                                                        style:
+                                                                            ts),
+                                                                    SizedBox(
+                                                                        height:
+                                                                            4),
+                                                                    Row(
+                                                                      children: [
+                                                                        Text(
+                                                                          menu,
+                                                                          style: ts.copyWith(
+                                                                              fontSize: 12,
+                                                                              fontWeight: FontWeight.w500,
+                                                                              color: PrimaryColor),
+                                                                        ),
+                                                                        SizedBox(
+                                                                          width:
+                                                                              16,
+                                                                        ),
+                                                                        Text(
+                                                                          leftCount,
+                                                                          style: ts.copyWith(
+                                                                              fontSize: 12,
+                                                                              fontWeight: FontWeight.w500),
+                                                                        ),
+                                                                      ],
+                                                                    )
+                                                                  ])
+                                                            ])),
+                                                  ],
+                                                ),
+                                                Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment.end,
+                                                    children: [
+                                                      Image(
+                                                          image: AssetImage(
+                                                            'asset/img/bacord.png',
+                                                          ),
+                                                          width: 128.8,
+                                                          height: 29.6),
+                                                      Text("A1234567890A",
                                                           style: ts.copyWith(
-                                                              fontSize: 12,
+                                                              fontSize: 8,
                                                               fontWeight:
                                                                   FontWeight
-                                                                      .w500),
-                                                        )
-                                                      ])
-                                                ])),
-                                        Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 40.0),
-                                            child: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.end,
-                                                children: [
-                                                  Image(
-                                                      image: AssetImage(
-                                                        'asset/img/bacord.png',
-                                                      ),
-                                                      width: 128.8,
-                                                      height: 29.6),
-                                                  Text("A1234567890A",
-                                                      style: ts.copyWith(
-                                                          fontSize: 8,
-                                                          fontWeight:
-                                                              FontWeight.w500))
-                                                ]))
-                                      ]))),
+                                                                      .w500))
+                                                    ])
+                                              ])))
+                                  : Container(
+                                      width: MediaQuery.of(context).size.width,
+                                      height: 80,
+                                      decoration: ContainerBorderDecoration,
+                                      child: Center(
+                                        child: Text("아직은 구독한 상품이 없습니다.",style: ts,),
+                                      )),
                               Padding(
                                   padding: const EdgeInsets.only(
                                       top: 32, bottom: 16),
@@ -407,6 +458,7 @@ class _BottomDragState extends State<BottomDrag> {
                                                                         .circular(
                                                                             16.0))),
                                                         onPressed: () {},
+                                                        //               getAiRecomendData,
                                                         child: Row(
                                                             mainAxisAlignment:
                                                                 MainAxisAlignment
@@ -474,39 +526,74 @@ class _BottomDragState extends State<BottomDrag> {
                                 ],
                               ),
                               SizedBox(height: 16),
-                              Container(
-                                  width: MediaQuery.of(context).size.width,
-                                  height: 250,
-                                  decoration: ContainerBorderDecoration,
-                                  child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              top: 32.0,
-                                              left: 32.0,
-                                              bottom: 16),
-                                          child: Text("AI분석 키워드", style: ts),
-                                        ),
-                                        AILayoutBuilder(
-                                            Text1: "#패밀리 레스토랑 ",
-                                            Text2: "#베이커리 ",
-                                            Text3: " #카페 ",
-                                            textStyle: 1),
-                                        const SizedBox(height: 12),
-                                        AILayoutBuilder(
-                                            Text1: "#편의점 ",
-                                            Text2: "#교통 ",
-                                            Text3: " #온라인결제 ",
-                                            textStyle: 2),
-                                        const SizedBox(height: 12),
-                                        AILayoutBuilder(
-                                            Text1: "#테마 파크 ",
-                                            Text2: "#콘텐츠 ",
-                                            Text3: " #영화 ",
-                                            textStyle: 3)
-                                      ]))
+                              FutureBuilder(
+                                  future: getAiRecomendData(),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.waiting) {
+                                      return CircularProgressIndicator();
+                                    }
+                                    if (snapshot.hasError) {
+                                      return Text("Error: ${snapshot.error}");
+                                    }
+                                    var categories = snapshot.data['category'];
+
+                                    print(categories);
+                                    //print(snapshot.data);
+                                    return Container(
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        height: 250,
+                                        decoration: ContainerBorderDecoration,
+                                        child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    top: 32.0,
+                                                    left: 32.0,
+                                                    bottom: 16),
+                                                child:
+                                                    Text("AI분석 키워드", style: ts),
+                                              ),
+                                              AILayoutBuilder(
+                                                  Text1: " #" +
+                                                      categories[3].toString() +
+                                                      " ",
+                                                  Text2: " #" +
+                                                      categories[0].toString() +
+                                                      " ",
+                                                  Text3: "#" +
+                                                      categories[6].toString() +
+                                                      " ",
+                                                  textStyle: 1),
+                                              const SizedBox(height: 12),
+                                              AILayoutBuilder(
+                                                  Text1: " #" +
+                                                      categories[4].toString() +
+                                                      " ",
+                                                  Text2: " #" +
+                                                      categories[1].toString() +
+                                                      " ",
+                                                  Text3: " #" +
+                                                      categories[7].toString() +
+                                                      " ",
+                                                  textStyle: 2),
+                                              const SizedBox(height: 12),
+                                              AILayoutBuilder(
+                                                  Text1: " #" +
+                                                      categories[5].toString() +
+                                                      " ",
+                                                  Text2: " #" +
+                                                      categories[2].toString() +
+                                                      " ",
+                                                  Text3: " #" +
+                                                      categories[8].toString() +
+                                                      " ",
+                                                  textStyle: 3),
+                                            ]));
+                                  })
                             ])))
               ]))
             ]);
@@ -517,21 +604,25 @@ class _BottomDragState extends State<BottomDrag> {
   void onPressed() {
     Navigator.of(context)
         .push(MaterialPageRoute(builder: (BuildContext context) {
-      return MyApp();
+      return MyApp(loginId: widget.loginId);
     }));
   }
 
   void myLifeStyleIconBtn() {
     Navigator.of(context)
         .push(MaterialPageRoute(builder: (BuildContext context) {
-      return MyLifeStyle();
+      return MyLifeStyle(
+        loginId: widget.loginId,
+      );
     }));
   }
 
   void mySubscribeIconBtn() {
     Navigator.of(context)
         .push(MaterialPageRoute(builder: (BuildContext context) {
-      return MySubScribe();
+      return MySubScribe(
+        loginId: widget.loginId,
+      );
     }));
   }
 }

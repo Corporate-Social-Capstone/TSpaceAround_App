@@ -49,18 +49,18 @@ dev_dependencies:
   dio: ^5.1.2
   google_maps_flutter: ^2.2.6
   geolocator: ^9.0.2
+  simple_shadow: ^0.3.1
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter packages.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
   assets:
-    - asset/img/TMain.png
+    - asset/img/mainimage.png
     - asset/img/btnImage.jpeg
     - asset/img/TMain2.png
     - asset/img/icon1.png
@@ -77,6 +77,14 @@ flutter:
     - asset/img/Scard1.jpeg
     - asset/img/caffe115.jpeg
     - asset/img/allSubList.png
+    - asset/img/AroundIcon.png
+    - asset/img/HotIcon.png
+    - asset/img/MySubIcon.png
+    - asset/img/image.png
+    - asset/img/sub1Icon.png
+    - asset/img/sub2Icon.png
+    - asset/img/sub3Icon.png
+    - asset/img/subScribe.jpeg
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg
