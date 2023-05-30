@@ -313,13 +313,21 @@ class LongButton extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                id == btnState ?
                 Text(
                   title,
-                  style: ts.copyWith(fontSize: 18, fontWeight: FontWeight.w600),
+                  style: ts.copyWith(fontSize: 18, fontWeight: FontWeight.w600, color: PrimaryColor),
+                ) : Text(
+                  title,
+                  style: ts.copyWith(fontSize: 18, fontWeight: FontWeight.w600, color : Colors.grey),
                 ),
+                id == btnState ?
                 Text(
                   cost,
-                  style: ts.copyWith(fontSize: 18, fontWeight: FontWeight.w600),
+                  style: ts.copyWith(fontSize: 18, fontWeight: FontWeight.w600, color: PrimaryColor),
+                ) : Text(
+                  cost,
+                  style: ts.copyWith(fontSize: 18, fontWeight: FontWeight.w600, color: PrimaryColor),
                 ),
               ],
             ),

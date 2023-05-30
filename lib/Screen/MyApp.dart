@@ -158,7 +158,7 @@ class _MyAppState extends State<MyApp> {
                             children: [
                               GestureDetector(
                                 onTap: () {
-                                  print("test1");
+
                                 },
                                 child: ClipOval(
                                   child: Image(
