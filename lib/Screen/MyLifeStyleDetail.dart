@@ -24,7 +24,7 @@ class _MyLifeStyleState extends State<MyLifeStyle> {
   Future getMyLifeStyle() async {
     final dio = Dio();
     final resp = await dio.get(
-        "http://211.62.179.135:4001/user/myLifeStyle?name=" + widget.loginId);
+        "http://43.200.183.214:4001/user/myLifeStyle?name=" + widget.loginId);
     print(resp.data);
     return resp.data;
   }

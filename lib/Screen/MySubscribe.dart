@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:t_space_around/Component/SimpleAppBar.dart';
+import 'package:t_space_around/Component/alerDialog.dart';
 import 'package:t_space_around/Component/color.dart';
 
 import '../url_name/data.dart';
@@ -372,13 +373,8 @@ class BottonButton extends StatelessWidget {
                 menu = "원두 구독";
                 leftCount= "잔여 15/15";
               }
-              Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(
-                      //페이지 스택 제거
-                      builder: (BuildContext context) =>
-                          MyApp(loginId: loginId)),
-                  (route) => false);
+              DialogShow(context,"구독 완료",loginId);
+
             },
             //               getAiRecomendData,
             child: Row(

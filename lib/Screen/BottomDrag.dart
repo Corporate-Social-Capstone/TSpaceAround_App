@@ -30,7 +30,7 @@ class _BottomDragState extends State<BottomDrag> {
   Future getAiRecomendData() async {
     final dio = Dio();
     final resp = await dio
-        .get("http://211.62.179.135:4001/user/category?name=" + widget.loginId);
+        .get("http://43.200.183.214:4001/user/category?name=" + widget.loginId);
     print(resp.data);
     return resp.data;
   }

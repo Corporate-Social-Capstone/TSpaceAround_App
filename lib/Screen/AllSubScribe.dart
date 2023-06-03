@@ -353,7 +353,7 @@ class _AllSubScribeState extends State<AllSubScribe> {
   Future getStoreGpsData() async {
     final dio = Dio();
     final resp = await dio.get(
-        "http://211.62.179.135:4001/user/getStoreGps?name=" + widget.loginId);
+        "http://43.200.183.214:4001/user/getStoreGps?name=" + widget.loginId);
     print(resp.data);
     return resp.data;
   }
